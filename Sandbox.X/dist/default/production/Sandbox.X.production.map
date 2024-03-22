@@ -6,7 +6,7 @@ Linker command line:
   --edf=C:\Program Files\Microchip\xc8\v2.46\pic\dat\20240104201356_en.msgs \
   -cs -h+dist/default/production\Sandbox.X.production.sym \
   --cmf=dist/default/production\Sandbox.X.production.cmf -z -Q18F8722 \
-  -oC:\Users\jerry\AppData\Local\Temp\xcAsmds.\driver_tmp_3.o \
+  -oC:\Users\jerry\AppData\Local\Temp\xcAs1rk.\driver_tmp_3.o \
   -presetVector=0h -pstart=200h --fixupoverflow=error \
   -ver=XC8 PIC(R) Assembler --fixupoverflow=lstwarn \
   -Mdist/default/production/Sandbox.X.production.map -E1 --acfsm=1493 \
@@ -32,13 +32,13 @@ Machine type is 18F8722
                 Name                               Link     Load   Length Selector   Space Scale
 build/default/production/TestInput.o
                 config                           300001   300001        D        0       4
-                start                               200      200       52      100       0
+                start                               200      200       84      100       0
                 resetVector                           0        0        4        0       0
                 udata_acs                             0        0        2        0       1
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
-                start                               200      200       52         0
+                start                               200      200       84         0
                 resetVector                           0        0        4         0
 
         CLASS   CONST          
@@ -105,7 +105,7 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 
                 resetVector                    000000  000004  000004         0       0  CODE    
                 udata_acs                      000000  000002  000002         0       1  COMRAM  
-                start                          000200  000052  000252       100       0  CODE    
+                start                          000200  000084  000284       100       0  CODE    
 
 
 UNUSED ADDRESS RANGES
@@ -128,14 +128,14 @@ UNUSED ADDRESS RANGES
         BANK8            000800-0008FF              100
         BANK9            000900-0009FF              100
         BIGRAM           000004-0001FF              1FC
-                         000252-000F5F              D0E
+                         000284-000F5F              CDC
         BIGSFR           000F60-000FFF               A0
         CODE             000004-0001FF              1FC
-                         000252-01FFFF            1FDAE
+                         000284-01FFFF            1FD7C
         COMRAM           000002-00005F               5E
         CONFIG           300000-300000                1
         CONST            000004-0001FF              1FC
-                         000252-01FFFF            1FDAE
+                         000284-01FFFF            1FD7C
         EEDATA           F00000-F003FF              400
         IDLOC            200000-200007                8
         MEDIUMCONST      001000-00FFFF             F000
@@ -147,35 +147,35 @@ UNUSED ADDRESS RANGES
                                   Symbol Table
 
 LSB_switch      udata_acs    000000  MSB_switch      udata_acs    000001
-__H__absolute__ __absolute__ 000000  __Hcode         code         000252
-__Hconfig       config       30000E  __Hdata         data         000252
-__Hedata        edata        000252  __HresetVector  resetVector  000004
-__Hspace_0      (abs)        000252  __Hspace_1      (abs)        000002
+__H__absolute__ __absolute__ 000000  __Hcode         code         000284
+__Hconfig       config       30000E  __Hdata         data         000284
+__Hedata        edata        000284  __HresetVector  resetVector  000004
+__Hspace_0      (abs)        000284  __Hspace_1      (abs)        000002
 __Hspace_3      (abs)        000000  __Hspace_4      (abs)        60000F
-__Hstart        start        000252  __Hudata        udata        000252
-__Hudata_acs    udata_acs    000252  __Hudata_bank0  udata_bank0  000252
-__Hudata_bank1  udata_bank1  000252  __Hudata_bank10 udata_bank10 000252
-__Hudata_bank11 udata_bank11 000252  __Hudata_bank12 udata_bank12 000252
-__Hudata_bank13 udata_bank13 000252  __Hudata_bank14 udata_bank14 000252
-__Hudata_bank15 udata_bank15 000252  __Hudata_bank2  udata_bank2  000252
-__Hudata_bank3  udata_bank3  000252  __Hudata_bank4  udata_bank4  000252
-__Hudata_bank5  udata_bank5  000252  __Hudata_bank6  udata_bank6  000252
-__Hudata_bank7  udata_bank7  000252  __Hudata_bank8  udata_bank8  000252
-__Hudata_bank9  udata_bank9  000252  __L__absolute__ __absolute__ 000000
-__Lcode         code         000252  __Lconfig       config       000000
-__Ldata         data         000252  __Ledata        edata        000252
+__Hstart        start        000284  __Hudata        udata        000284
+__Hudata_acs    udata_acs    000284  __Hudata_bank0  udata_bank0  000284
+__Hudata_bank1  udata_bank1  000284  __Hudata_bank10 udata_bank10 000284
+__Hudata_bank11 udata_bank11 000284  __Hudata_bank12 udata_bank12 000284
+__Hudata_bank13 udata_bank13 000284  __Hudata_bank14 udata_bank14 000284
+__Hudata_bank15 udata_bank15 000284  __Hudata_bank2  udata_bank2  000284
+__Hudata_bank3  udata_bank3  000284  __Hudata_bank4  udata_bank4  000284
+__Hudata_bank5  udata_bank5  000284  __Hudata_bank6  udata_bank6  000284
+__Hudata_bank7  udata_bank7  000284  __Hudata_bank8  udata_bank8  000284
+__Hudata_bank9  udata_bank9  000284  __L__absolute__ __absolute__ 000000
+__Lcode         code         000284  __Lconfig       config       000000
+__Ldata         data         000284  __Ledata        edata        000284
 __LresetVector  resetVector  000000  __Lspace_0      (abs)        000000
 __Lspace_1      (abs)        000000  __Lspace_3      (abs)        000000
 __Lspace_4      (abs)        000000  __Lstart        start        000200
-__Ludata        udata        000252  __Ludata_acs    udata_acs    000252
-__Ludata_bank0  udata_bank0  000252  __Ludata_bank1  udata_bank1  000252
-__Ludata_bank10 udata_bank10 000252  __Ludata_bank11 udata_bank11 000252
-__Ludata_bank12 udata_bank12 000252  __Ludata_bank13 udata_bank13 000252
-__Ludata_bank14 udata_bank14 000252  __Ludata_bank15 udata_bank15 000252
-__Ludata_bank2  udata_bank2  000252  __Ludata_bank3  udata_bank3  000252
-__Ludata_bank4  udata_bank4  000252  __Ludata_bank5  udata_bank5  000252
-__Ludata_bank6  udata_bank6  000252  __Ludata_bank7  udata_bank7  000252
-__Ludata_bank8  udata_bank8  000252  __Ludata_bank9  udata_bank9  000252
+__Ludata        udata        000284  __Ludata_acs    udata_acs    000284
+__Ludata_bank0  udata_bank0  000284  __Ludata_bank1  udata_bank1  000284
+__Ludata_bank10 udata_bank10 000284  __Ludata_bank11 udata_bank11 000284
+__Ludata_bank12 udata_bank12 000284  __Ludata_bank13 udata_bank13 000284
+__Ludata_bank14 udata_bank14 000284  __Ludata_bank15 udata_bank15 000284
+__Ludata_bank2  udata_bank2  000284  __Ludata_bank3  udata_bank3  000284
+__Ludata_bank4  udata_bank4  000284  __Ludata_bank5  udata_bank5  000284
+__Ludata_bank6  udata_bank6  000284  __Ludata_bank7  udata_bank7  000284
+__Ludata_bank8  udata_bank8  000284  __Ludata_bank9  udata_bank9  000284
 __S0            (abs)        000000  __S1            (abs)        000002
 __S3            (abs)        000000  isa$std         (abs)        000001
 isa$xinst       (abs)        000000  

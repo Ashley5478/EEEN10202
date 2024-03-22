@@ -7808,6 +7808,9 @@ start:
 
 
 main:
+    bcf LATA, 0, a ; Disabling the NPN transistor (Q3, ((PORTA) and 0FFh), 4, a) for next sequence
+    setf LATH ; Clearing all the binary for 7 segment display
+
 
 
 
@@ -7858,6 +7861,46 @@ switch:
 
     clrf LATF
     bcf LATA, 4, a ; Disabling the NPN transistor for next sequence
+
+calculator:
+    rrncf MSB_switch, F, a ; Treating the first 4 bits MSB as 8 bit unsigned
+    rrncf MSB_switch, F, a
+    rrncf MSB_switch, F, a
+    rrncf MSB_switch, W, a ; Copying the shifted binary to working register
+    andlw 00001111B ; Masking the unused bits for safety
+    movwf MSB_switch ; Copying the masked binary for safety
+
+    ; Subtracting the LSB from MSB binary
+    movf MSB_switch, W, a
+    subwf LSB_switch
+
+    ; Arithmetic operators: bz = equal, bnc = MSB > LSB, BNZ = LSB < MSB (Else after previous tests)
+
+    bz equal ; Jump to bz if zero flag = 1
+    bnc leftlarger ; Jump to rightlarger if carry flag = 0
+    bnz rightlarger ; Else after the two previous tests
+
+ equal: ; Letter "E" for equal
+     movlw 00001110B ; Inverted binary for letter "E" (ADEFG)
+     movwf LATF
+
+     bcf LATH, 0, a
+     bra main
+
+ leftlarger: ; Letter "L" for Left
+         movlw 10001111B ; Inverted binary for letter "L" (DEF)
+
+     movwf LATF
+
+     bcf LATH, 0, a
+     bra main
+
+     rightlarger: ; Letter "r" for right
+     movlw 01011111B ; Inverted binary for letter "r" (EG)
+     movwf LATF
+
+     bcf LATH, 0, a
+     bra main
     bra main ; Else loop back to main
 
     end
