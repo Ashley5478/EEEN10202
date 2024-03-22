@@ -1,23 +1,13 @@
-# 1 "Sandbox.s"
+# 1 "TestInput.s"
 # 1 "<built-in>" 1
-# 1 "Sandbox.s" 2
-; Program to light LED1 on the IO board
-; Author: Samuel Walsh
-; Date: 09/02/24
-; Add the global options "-Wl,-presetVector=0h, -Wl,-pstart=200h" in MPLAB before building this
-;
-; Helpful information
-; TRISA = 0xF92, LATA = 0xF89 (NPN Tansistor Q3 attached to RA4)
-; TRISF = 0xF97, LATF = 0xF8E (LEDs attached to RF0-RF7)
-
+# 1 "TestInput.s" 2
 processor 18F8722
-radix dec ; use decimal numbers
+radix dec
 
-CONFIG OSC = HS ; use the high speed external crystal on the PCB
-CONFIG WDT = OFF ; turn off the watchdog timer
-CONFIG LVP = OFF ; turn off low voltage mode
+CONFIG OSC = HS
+CONFIG WDT = OFF
+CONFIG LVP = OFF
 
-;Include useful processor-specific definitions
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 1 3
 
@@ -7783,37 +7773,92 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 2 3
-# 19 "Sandbox.s" 2
+# 8 "TestInput.s" 2
+
+
+PSECT udata_acs
+global LSB_switch, MSB_switch;, TOTAL_switch ; Custom memory allocation
+LSB_switch: ds 1 ; 1 byte reservation each
+MSB_switch: ds 1
+;TOTAL_switch: ds 1
 
 PSECT resetVector, class=CODE, reloc=2
 resetVector:
-    goto start ; On reset, jump to our program start location
-
-; Our program start point
+    goto start
 PSECT start, class=CODE, reloc=2
-
-;TRIS Initialization - DO NOT TOUCH
 start:
-    movlw 0x0F
-    movwf ADCON1, a ; Set all inputs as digital (see p272 of datasheet)
-    bsf TRISB, 0, a ; Set ((TRISB) and 0FFh), 0, a as input
-    bcf TRISF, 0, a ; LED1 as output
-    bcf TRISA, 4, a ; Set Q3 as output
 
-;Main
+    movlw 0x0F ; Digital Input (00001111)
+    movwf ADCON1, a
+
+    bcf TRISA, 4, a ; Q3 (LED outputs, ((PORTA) and 0FFh), 4, a)
+    clrf TRISF ; Binary (Digital outputs, RF01234567)
+    movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
+    movwf TRISH
+    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
+    movwf TRISC
+
+    bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
+
+    movlw 00000011B ; Q1 and Q2 PNP
+    movwf LATH
+    bcf LATA, 4, a ; Q3
+    clrf LATF ; Binary
+
+
+
 main:
-    clrf LATF, a ; Clear all LEDs
-    movf PORTB, W, a ; Read all of PORTB
-    andlw 00000001 ; Mask off unused bits
-    ; Now we have the value you could do a few things.
-    ; For example, you could check the ALU flags to see whether the value was 0.
-    ; As ((PORTE) and 0FFh), 2, a = 0 V when pressed down, 1 AND 0 = 0 = Zero flag will be set.
-    ; Check the Z flag and then branch to wherever you want:
-    bz pb2_pressed ; If pressed go to this label
+
+
+
+
+
+
+    movf PORTJ, W, a ; Read all of PORTJ (Copy port inputs to working register)
+    andlw 00100000B ; mask off unused bits (((PORTJ) and 0FFh), 5, a)
+    bz pb1_pressed ; Go to pb1_pressed if WREG is zero flagged. We used AND gate after reading PORTJ. The PORTJ (((PORTJ) and 0FFh), 5, a) becomes zero if pressed.
+    bnz switch
+
+    pb1_pressed:
+
+    bcf LATH, 1, a ; Enabling the PNP transistor Q2 (((PORTH) and 0FFh), 1, a) for MSB 7seg display
+    movlw 10000101 ; Letter "U" inverted (BCDEF)
+    movwf LATF
+
+
+
+    bsf LATH, 1, a ; Disabling the PNP transistor for next sequence
+    setf LATF ; Clearing the output binary for LEDs
+
+
+switch:
+
+    movf PORTC, W, a ;((PORTC) and 0FFh), 2, a - ((PORTC) and 0FFh), 5, a to working register
+    movwf LSB_switch, a ; Working register to custom memory allocation
+    rrncf LSB_switch, F, a ; Rotate switches right RC2345 acting as RC1234
+    rrncf LSB_switch, F, a ; Rotate switches right RC1234 acting as RC0123
+    movf LSB_switch, W, a ; Back to working register
+    andlw 0x0F ; Mask off unused bits (00001111)
+    movwf LSB_switch, a
+
+
+    movf PORTH, W, a
+    movwf MSB_switch, a
+    movf MSB_switch, W, a
+    andlw 11110000B
+    movwf MSB_switch, a
+
+    movf LSB_switch, W, a
+    iorwf MSB_switch, W, a
+    movwf LATF
+
+    bsf LATA, 4, a ; Enabling the NPN transistor Q3 (((PORTA) and 0FFh), 4, a) for LEDs
+
+
+
+
+    clrf LATF
+    bcf LATA, 4, a ; Disabling the NPN transistor for next sequence
     bra main ; Else loop back to main
 
-pb2_pressed:
-  bsf LATA, 4, a ; Enable Q3
-  bsf LATF, 0, a ; Turn on LED1
-  bra main
     end

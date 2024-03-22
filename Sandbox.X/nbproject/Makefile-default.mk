@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=sandbox.s
+SOURCEFILES_QUOTED_IF_SPACED=TestInput.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/sandbox.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/sandbox.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/TestInput.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/TestInput.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/sandbox.o
+OBJECTFILES=${OBJECTDIR}/TestInput.o
 
 # Source Files
-SOURCEFILES=sandbox.s
+SOURCEFILES=TestInput.s
 
 
 
@@ -89,21 +89,21 @@ FINAL_IMAGE_NAME_MINUS_EXTENSION=${DISTDIR}/Sandbox.X.${IMAGE_TYPE}
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: pic-as-assembler
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/sandbox.o: sandbox.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/TestInput.o: TestInput.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/sandbox.o 
+	@${RM} ${OBJECTDIR}/TestInput.o 
 	${MP_AS} -mcpu=PIC18F8722 -c \
-	-o ${OBJECTDIR}/sandbox.o \
-	sandbox.s \
+	-o ${OBJECTDIR}/TestInput.o \
+	TestInput.s \
 	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp -Wl,-presetVector=0h, -Wl,-pstart=200h
 	
 else
-${OBJECTDIR}/sandbox.o: sandbox.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/TestInput.o: TestInput.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/sandbox.o 
+	@${RM} ${OBJECTDIR}/TestInput.o 
 	${MP_AS} -mcpu=PIC18F8722 -c \
-	-o ${OBJECTDIR}/sandbox.o \
-	sandbox.s \
+	-o ${OBJECTDIR}/TestInput.o \
+	TestInput.s \
 	  -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp -Wl,-presetVector=0h, -Wl,-pstart=200h
 	
 endif

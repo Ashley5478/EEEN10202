@@ -19,10 +19,14 @@
                    projectFiles="true">
       <itemPath>LEDcounter1.s</itemPath>
       <itemPath>LEDswitch.s</itemPath>
-      <itemPath>sandbox.s</itemPath>
       <itemPath>Sounder.s</itemPath>
+      <itemPath>TestOutput.s</itemPath>
+      <itemPath>TestInput.s</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
@@ -558,6 +562,22 @@
         <property key="warningmessagebreakoptions.warningmessages" value="holdstate"/>
       </Simulator>
       <item path="Sounder.s" ex="true" overriding="false">
+        <pic-as-assembler>
+        </pic-as-assembler>
+        <pic-as-global>
+        </pic-as-global>
+        <pic-as-linker>
+        </pic-as-linker>
+      </item>
+      <item path="TestInput.s" ex="false" overriding="false">
+        <pic-as-assembler>
+        </pic-as-assembler>
+        <pic-as-global>
+        </pic-as-global>
+        <pic-as-linker>
+        </pic-as-linker>
+      </item>
+      <item path="TestOutput.s" ex="true" overriding="false">
       </item>
       <Tool>
         <property key="AutoSelectMemRanges" value="auto"/>
@@ -1206,14 +1226,6 @@
                   value="Press to select which tool pack to use"/>
         <property key="voltagevalue" value="4.625"/>
       </pk4hybrid>
-      <item path="sandbox.s" ex="false" overriding="false">
-        <pic-as-assembler>
-        </pic-as-assembler>
-        <pic-as-global>
-        </pic-as-global>
-        <pic-as-linker>
-        </pic-as-linker>
-      </item>
     </conf>
   </confs>
 </configurationDescriptor>

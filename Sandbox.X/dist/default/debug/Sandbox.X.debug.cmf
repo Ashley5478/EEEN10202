@@ -11,10 +11,10 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$build/default/debug/LEDswitch.o
-start CODE 0 200 200 28 1 2
+$build/default/debug/TestInput.o
+start CODE 0 200 200 52 1 2
 resetVector CODE 0 0 0 4 1 2
-udata_acs COMRAM 1 0 0 1 1 1
+udata_acs COMRAM 1 0 0 2 1 1
 config CONFIG 4 300001 300001 D 1 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -35,11 +35,11 @@ BANK7 700-7FF 1
 BANK8 800-8FF 1
 BANK9 900-9FF 1
 CONST 4-1FF 1
-CONST 228-1FFFF 1
+CONST 252-1FFFF 1
 IDLOC 200000-200007 1
 SMALLCONST 1000-1FFFF 1
 CODE 4-1FF 1
-CODE 228-1FFFF 1
+CODE 252-1FFFF 1
 BANK10 A00-AFF 1
 BANK11 B00-BFF 1
 BANK12 C00-CFF 1
@@ -47,9 +47,9 @@ BANK13 D00-DFF 1
 BANK14 E00-EFF 1
 BANK15 F00-F5F 1
 BIGRAM 4-1FF 1
-BIGRAM 228-F5F 1
+BIGRAM 252-F5F 1
 BIGSFR F60-FFF 1
-COMRAM 1-5F 1
+COMRAM 2-5F 1
 CONFIG 300000-300000 1
 EEDATA F00000-F003FF 1
 MEDIUMCONST 1000-FFFF 1
@@ -67,28 +67,49 @@ MEDIUMCONST 11000-1FFFF 1
 # are in ascending order of addresses.
 # All other numeric values are in decimal.
 %LINETAB
-$build/default/debug/LEDswitch.o
-200 start CODE >20:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-202 start CODE >21:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-204 start CODE >22:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-206 start CODE >25:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-208 start CODE >26:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-20A start CODE >31:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-20C start CODE >32:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-20E start CODE >35:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-210 start CODE >36:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-212 start CODE >37:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-214 start CODE >38:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-216 start CODE >39:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-218 start CODE >40:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-21A start CODE >41:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-21C start CODE >43:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-21E start CODE >44:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-220 start CODE >45:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-222 start CODE >46:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-224 start CODE >48:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-226 start CODE >51:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
-0 resetVector CODE >16:C:\Users\JeongHyun\MPLABXProjects\Sandbox.X\LEDswitch.s
+$build/default/debug/TestInput.o
+200 start CODE >22:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+202 start CODE >23:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+204 start CODE >25:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+206 start CODE >26:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+208 start CODE >27:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+20A start CODE >28:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+20C start CODE >29:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+20E start CODE >30:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+210 start CODE >32:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+212 start CODE >34:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+214 start CODE >35:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+216 start CODE >36:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+218 start CODE >37:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+21A start CODE >48:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+21C start CODE >49:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+21E start CODE >50:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+220 start CODE >51:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+222 start CODE >55:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+224 start CODE >56:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+226 start CODE >57:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+228 start CODE >61:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+22A start CODE >62:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+22C start CODE >67:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+22E start CODE >68:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+230 start CODE >69:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+232 start CODE >70:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+234 start CODE >71:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+236 start CODE >72:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+238 start CODE >73:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+23A start CODE >76:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+23C start CODE >77:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+23E start CODE >78:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+240 start CODE >79:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+242 start CODE >80:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+244 start CODE >82:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+246 start CODE >83:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+248 start CODE >84:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+24A start CODE >86:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+24C start CODE >91:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+24E start CODE >92:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+250 start CODE >93:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
+0 resetVector CODE >18:C:\Users\jerry\MPLABXProjects\Sandbox.X\TestInput.s
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -101,70 +122,71 @@ $build/default/debug/LEDswitch.o
 # was defined in a psect then <psect> will be "-". File-name
 # is the name of the object file in which the symbol was defined.
 %SYMTAB
-__Hspace_0 228 0 ABS 0 - -
-__Hspace_1 1 0 ABS 0 - -
+__Hspace_0 252 0 ABS 0 - -
+__Hspace_1 2 0 ABS 0 - -
 __Hspace_3 0 0 ABS 0 - -
 __Hspace_4 60000F 0 ABS 0 - -
-__Hudata_bank0 228 0 ABS 0 udata_bank0 -
-__Hudata_bank1 228 0 ABS 0 udata_bank1 -
-__Hudata_bank2 228 0 ABS 0 udata_bank2 -
-__Hudata_bank3 228 0 ABS 0 udata_bank3 -
-__Hudata_bank4 228 0 ABS 0 udata_bank4 -
-__Hudata_bank5 228 0 ABS 0 udata_bank5 -
-__Hudata_bank6 228 0 ABS 0 udata_bank6 -
-__Hudata_bank7 228 0 ABS 0 udata_bank7 -
-__Hudata_bank8 228 0 ABS 0 udata_bank8 -
-__Hudata_bank9 228 0 ABS 0 udata_bank9 -
+__Hudata_bank0 252 0 ABS 0 udata_bank0 -
+__Hudata_bank1 252 0 ABS 0 udata_bank1 -
+__Hudata_bank2 252 0 ABS 0 udata_bank2 -
+__Hudata_bank3 252 0 ABS 0 udata_bank3 -
+__Hudata_bank4 252 0 ABS 0 udata_bank4 -
+__Hudata_bank5 252 0 ABS 0 udata_bank5 -
+__Hudata_bank6 252 0 ABS 0 udata_bank6 -
+__Hudata_bank7 252 0 ABS 0 udata_bank7 -
+__Hudata_bank8 252 0 ABS 0 udata_bank8 -
+__Hudata_bank9 252 0 ABS 0 udata_bank9 -
 __L__absolute__ 0 0 ABS 0 __absolute__ -
 __LresetVector 0 0 CODE 0 resetVector -
-__Hudata_bank10 228 0 ABS 0 udata_bank10 -
-__Hudata_bank11 228 0 ABS 0 udata_bank11 -
-__Hudata_bank12 228 0 ABS 0 udata_bank12 -
-__Hudata_bank13 228 0 ABS 0 udata_bank13 -
-__Hudata_bank14 228 0 ABS 0 udata_bank14 -
-__Hudata_bank15 228 0 ABS 0 udata_bank15 -
-switch_value 0 0 COMRAM 1 udata_acs build/default/debug/LEDswitch.o
-isa$xinst 0 0 ABS 0 - build/default/debug/LEDswitch.o
-__Hedata 228 0 ABS 0 edata -
-__Hstart 228 0 CODE 0 start -
-__Hudata 228 0 ABS 0 udata -
+__Hudata_bank10 252 0 ABS 0 udata_bank10 -
+__Hudata_bank11 252 0 ABS 0 udata_bank11 -
+__Hudata_bank12 252 0 ABS 0 udata_bank12 -
+__Hudata_bank13 252 0 ABS 0 udata_bank13 -
+__Hudata_bank14 252 0 ABS 0 udata_bank14 -
+__Hudata_bank15 252 0 ABS 0 udata_bank15 -
+isa$xinst 0 0 ABS 0 - build/default/debug/TestInput.o
+__Hedata 252 0 ABS 0 edata -
+__Hstart 252 0 CODE 0 start -
+__Hudata 252 0 ABS 0 udata -
 __Hconfig 30000E 0 CONFIG 4 config -
-__Ledata 228 0 ABS 0 edata -
+__Ledata 252 0 ABS 0 edata -
 __Lstart 200 0 CODE 0 start -
-__Ludata 228 0 ABS 0 udata -
-__Hcode 228 0 ABS 0 code -
-__Hdata 228 0 ABS 0 data -
-__Lcode 228 0 ABS 0 code -
-__Ldata 228 0 ABS 0 data -
+__Ludata 252 0 ABS 0 udata -
+__Hcode 252 0 ABS 0 code -
+__Hdata 252 0 ABS 0 data -
+__Lcode 252 0 ABS 0 code -
+__Ldata 252 0 ABS 0 data -
 __HresetVector 4 0 CODE 0 resetVector -
 __S0 0 0 ABS 0 - -
-__S1 1 0 ABS 0 - -
+__S1 2 0 ABS 0 - -
 __S3 0 0 ABS 0 - -
-__Ludata_bank10 228 0 ABS 0 udata_bank10 -
-__Ludata_bank11 228 0 ABS 0 udata_bank11 -
-__Ludata_bank12 228 0 ABS 0 udata_bank12 -
-__Ludata_bank13 228 0 ABS 0 udata_bank13 -
-__Ludata_bank14 228 0 ABS 0 udata_bank14 -
-__Ludata_bank15 228 0 ABS 0 udata_bank15 -
+__Ludata_bank10 252 0 ABS 0 udata_bank10 -
+__Ludata_bank11 252 0 ABS 0 udata_bank11 -
+__Ludata_bank12 252 0 ABS 0 udata_bank12 -
+__Ludata_bank13 252 0 ABS 0 udata_bank13 -
+__Ludata_bank14 252 0 ABS 0 udata_bank14 -
+__Ludata_bank15 252 0 ABS 0 udata_bank15 -
 __Lconfig 0 0 CONFIG 4 config -
-isa$std 1 0 ABS 0 - build/default/debug/LEDswitch.o
+isa$std 1 0 ABS 0 - build/default/debug/TestInput.o
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -
 __Lspace_3 0 0 ABS 0 - -
 __Lspace_4 0 0 ABS 0 - -
-__Ludata_bank0 228 0 ABS 0 udata_bank0 -
-__Ludata_bank1 228 0 ABS 0 udata_bank1 -
-__Ludata_bank2 228 0 ABS 0 udata_bank2 -
-__Ludata_bank3 228 0 ABS 0 udata_bank3 -
-__Ludata_bank4 228 0 ABS 0 udata_bank4 -
-__Ludata_bank5 228 0 ABS 0 udata_bank5 -
-__Ludata_bank6 228 0 ABS 0 udata_bank6 -
-__Ludata_bank7 228 0 ABS 0 udata_bank7 -
-__Ludata_bank8 228 0 ABS 0 udata_bank8 -
-__Ludata_bank9 228 0 ABS 0 udata_bank9 -
+LSB_switch 0 0 COMRAM 1 udata_acs build/default/debug/TestInput.o
+MSB_switch 1 0 COMRAM 1 udata_acs build/default/debug/TestInput.o
+__Ludata_bank0 252 0 ABS 0 udata_bank0 -
+__Ludata_bank1 252 0 ABS 0 udata_bank1 -
+__Ludata_bank2 252 0 ABS 0 udata_bank2 -
+__Ludata_bank3 252 0 ABS 0 udata_bank3 -
+__Ludata_bank4 252 0 ABS 0 udata_bank4 -
+__Ludata_bank5 252 0 ABS 0 udata_bank5 -
+__Ludata_bank6 252 0 ABS 0 udata_bank6 -
+__Ludata_bank7 252 0 ABS 0 udata_bank7 -
+__Ludata_bank8 252 0 ABS 0 udata_bank8 -
+__Ludata_bank9 252 0 ABS 0 udata_bank9 -
 __H__absolute__ 0 0 ABS 0 __absolute__ -
-__Hudata_acs 228 0 ABS 0 udata_acs -
-__Ludata_acs 228 0 ABS 0 udata_acs -
+__Hudata_acs 252 0 ABS 0 udata_acs -
+__Ludata_acs 252 0 ABS 0 udata_acs -
 # %SPLITSTAB Section
 # This section enumerates all the psect splits performed by the assembler.
 # The beginning of the section is indicated by %SPLITSTAB.
@@ -189,9 +211,9 @@ __Ludata_acs 228 0 ABS 0 udata_acs -
 # and size are in units of delta. The file address is in units of bytes.
 # All other numeric quantities are in decimal.
 %SEGMENTS
-start 0 200 200 28 1
+start 0 200 200 52 1
 resetVector 0 0 0 4 1
-udata_acs 1 0 0 1 1
+udata_acs 1 0 0 2 1
 # %NOTES Section
 # This section contains data of all the note-psects.  The beginning of the section
 # is indicated by %NOTES. The first line indicates the name and decimal
