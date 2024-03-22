@@ -1,0 +1,93 @@
+__S0 0 0 ABS 0
+__S1 1 0 ABS 0
+__S3 0 0 ABS 0
+__Hudata_bank10 228 0 ABS 0
+__Ludata_bank10 228 0 ABS 0
+__Hudata_bank4 228 0 ABS 0
+__Ludata_bank4 228 0 ABS 0
+__Hudata_bank13 228 0 ABS 0
+__Ludata_bank13 228 0 ABS 0
+__Hconfig 30000E 0 CONFIG 4
+__Lconfig 0 0 CONFIG 4
+switch_value 0 0 COMRAM 1
+__Hudata_acs 228 0 ABS 0
+__Ludata_acs 228 0 ABS 0
+isa$xinst 0 0 ABS 0
+__Hudata_bank5 228 0 ABS 0
+__Ludata_bank5 228 0 ABS 0
+__Hcode 228 0 ABS 0
+__Lcode 228 0 ABS 0
+__Hdata 228 0 ABS 0
+__Ldata 228 0 ABS 0
+isa$std 1 0 ABS 0
+__Hudata_bank0 228 0 ABS 0
+__Ludata_bank0 228 0 ABS 0
+__HresetVector 4 0 CODE 0
+__LresetVector 0 0 CODE 0
+__Hudata_bank11 228 0 ABS 0
+__Ludata_bank11 228 0 ABS 0
+__Hudata_bank6 228 0 ABS 0
+__Ludata_bank6 228 0 ABS 0
+__Hudata_bank14 228 0 ABS 0
+__Ludata_bank14 228 0 ABS 0
+__H__absolute__ 0 0 ABS 0
+__L__absolute__ 0 0 ABS 0
+__Hedata 228 0 ABS 0
+__Ledata 228 0 ABS 0
+__Hudata 228 0 ABS 0
+__Ludata 228 0 ABS 0
+__Hudata_bank1 228 0 ABS 0
+__Ludata_bank1 228 0 ABS 0
+__Hspace_0 228 0 ABS 0
+__Lspace_0 0 0 ABS 0
+__Hspace_1 1 0 ABS 0
+__Lspace_1 0 0 ABS 0
+__Hudata_bank7 228 0 ABS 0
+__Ludata_bank7 228 0 ABS 0
+__Hspace_3 0 0 ABS 0
+__Lspace_3 0 0 ABS 0
+__Hstart 228 0 CODE 0
+__Lstart 200 0 CODE 0
+__Hspace_4 60000F 0 ABS 0
+__Lspace_4 0 0 ABS 0
+__Hudata_bank2 228 0 ABS 0
+__Ludata_bank2 228 0 ABS 0
+__Hudata_bank12 228 0 ABS 0
+__Ludata_bank12 228 0 ABS 0
+__Hudata_bank8 228 0 ABS 0
+__Ludata_bank8 228 0 ABS 0
+__Hudata_bank15 228 0 ABS 0
+__Ludata_bank15 228 0 ABS 0
+__Hudata_bank3 228 0 ABS 0
+__Ludata_bank3 228 0 ABS 0
+__Hudata_bank9 228 0 ABS 0
+__Ludata_bank9 228 0 ABS 0
+%segments
+resetVector 0 3 CODE 0 0
+start 200 227 CODE 200 0
+udata_acs 0 0 COMRAM 0 1
+%locals
+build/default/debug/LEDswitch.o
+LEDswitch.s
+16 0 0 CODE 0
+LEDswitch.s
+20 200 0 CODE 0
+21 202 0 CODE 0
+22 204 0 CODE 0
+25 206 0 CODE 0
+26 208 0 CODE 0
+31 20A 0 CODE 0
+32 20C 0 CODE 0
+35 20E 0 CODE 0
+36 210 0 CODE 0
+37 212 0 CODE 0
+38 214 0 CODE 0
+39 216 0 CODE 0
+40 218 0 CODE 0
+41 21A 0 CODE 0
+43 21C 0 CODE 0
+44 21E 0 CODE 0
+45 220 0 CODE 0
+46 222 0 CODE 0
+48 224 0 CODE 0
+51 226 0 CODE 0
