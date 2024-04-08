@@ -7829,6 +7829,7 @@ main:
     bcf LATH, 1, a ; Enabling the PNP transistor Q2 (((PORTH) and 0FFh), 1, a) for MSB 7seg display
 
 
+    nop ; No operation (Delay to avoid dim lighting)
     bsf LATH, 1, a ; Disabling the PNP transistor for next sequence
     setf LATF ; Clearing the output binary for LEDs
 
@@ -7858,7 +7859,9 @@ switch:
 
 
 
-
+    nop ; No operation (Delay to avoid dim lighting)
+    nop ; No operation (Delay to avoid dim lighting)
+; nop ; No operation (Delay to avoid dim lighting)
     clrf LATF
     bcf LATA, 4, a ; Disabling the NPN transistor for next sequence
 
@@ -7876,9 +7879,9 @@ calculator:
 
     ; Arithmetic operators: bz = equal, bnc = MSB > LSB, BNZ = LSB < MSB (Else after previous tests)
 
-    bz equal ; Jump to bz if zero flag = 1
-    bnc leftlarger ; Jump to rightlarger if carry flag = 0
-    bnz rightlarger ; Else after the two previous tests
+    bz equal ; Jump to "equal" if zero flag = 1
+    bnc leftlarger ; Jump to "leftlarger" if carry flag = 0
+    bra rightlarger ; Else after the two previous tests
 
  equal: ; Letter "E" for equal
      movlw 00001110B ; Inverted binary for letter "E" (ADEFG)
@@ -7889,7 +7892,6 @@ calculator:
 
  leftlarger: ; Letter "L" for Left
          movlw 10001111B ; Inverted binary for letter "L" (DEF)
-
      movwf LATF
 
      bcf LATH, 0, a
