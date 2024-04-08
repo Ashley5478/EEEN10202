@@ -107,7 +107,7 @@ calculator:
     ; Arithmetic operators: bz = equal, bnc = MSB > LSB, BNZ = LSB < MSB (Else after previous tests)
     
     bz equal	    ; Jump to bz if zero flag = 1
-    bnc leftlarger  ; Jump to rightlarger if carry flag = 0
+    bnc leftlarger  ; Jump to leftlarger if carry flag = 0
     bnz rightlarger ; Else after the two previous tests
     
 	equal: ; Letter "E" for equal
