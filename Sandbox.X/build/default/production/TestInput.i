@@ -7858,10 +7858,9 @@ switch:
     bsf LATA, 4, a ; Enabling the NPN transistor Q3 (((PORTA) and 0FFh), 4, a) for LEDs
 
 
-
     nop ; No operation (Delay to avoid dim lighting)
-    nop ; No operation (Delay to avoid dim lighting)
-; nop ; No operation (Delay to avoid dim lighting)
+    nop
+    nop
     clrf LATF
     bcf LATA, 4, a ; Disabling the NPN transistor for next sequence
 
@@ -7881,7 +7880,7 @@ calculator:
 
     bz equal ; Jump to "equal" if zero flag = 1
     bnc leftlarger ; Jump to "leftlarger" if carry flag = 0
-    bra rightlarger ; Else after the two previous tests
+    bra rightlarger ; Else after the two previous tests (bnz also working)
 
  equal: ; Letter "E" for equal
      movlw 00001110B ; Inverted binary for letter "E" (ADEFG)
