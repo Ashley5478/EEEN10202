@@ -1,13 +1,14 @@
-# 1 "TestInput.s"
+# 1 "Sounder.s"
 # 1 "<built-in>" 1
-# 1 "TestInput.s" 2
+# 1 "Sounder.s" 2
+
+
+
 processor 18F8722
 radix dec
-
 CONFIG OSC = HS
-CONFIG WDT = OFF
+CONFIG WDT = OFF ;
 CONFIG LVP = OFF
-
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 1 3
 
@@ -7773,92 +7774,137 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 2 3
-# 8 "TestInput.s" 2
+# 9 "Sounder.s" 2
 
 
 PSECT udata_acs
-global LSB_switch, MSB_switch;, TOTAL_switch ; Custom memory allocation
-LSB_switch: ds 1 ; 1 byte reservation each
-MSB_switch: ds 1
-;TOTAL_switch: ds 1
+global p, q, k, t
+p: ds 1
+q: ds 1
+k: ds 1
+t: ds 1
+tm: ds 1
+km: ds 1
 
 PSECT resetVector, class=CODE, reloc=2
 resetVector:
-    goto start
+    goto start ;
 PSECT start, class=CODE, reloc=2
 start:
 
-    movlw 0x0F ; Digital Input (00001111)
-    movwf ADCON1, a
+    MOVLW 255
+    MOVWF tm
 
-    bcf TRISA, 4, a ; Q3 (LED outputs, ((PORTA) and 0FFh), 4, a)
-    clrf TRISF ; Binary (Digital outputs, RF01234567)
-    movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
-    movwf TRISH
-    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
-    movwf TRISC
+    MOVLW 3 ; Volume
+    MOVWF km
 
-    bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
+    MOVF tm, W
+    MOVWF t
 
-    movlw 00000011B ; Q1 and Q2 PNP
-    movwf LATH
-    bcf LATA, 4, a ; Q3
-    clrf LATF ; Binary
+note1:
 
 
-
-main:
-
-
+    BCF TRISJ,6
+    BSF LATJ, 6 ; Speaker ON
 
 
+    MOVF km, W
+    MOVWF k
+    loop2:
+ MOVLW 1
+ SUBWF k, W
+ MOVWF k
+ BZ clear
+ Bra loop2
 
 
-    movf PORTJ, W, a ; Read all of PORTJ (Copy port inputs to working register)
-    andlw 00100000B ; mask off unused bits (((PORTJ) and 0FFh), 5, a)
-    bz pb1_pressed ; Go to pb1_pressed if WREG is zero flagged. We used AND gate after reading PORTJ. The PORTJ (((PORTJ) and 0FFh), 5, a) becomes zero if pressed.
-    bnz switch
-
-    pb1_pressed:
-
-    bcf LATH, 1, a ; Enabling the PNP transistor Q2 (((PORTH) and 0FFh), 1, a) for MSB 7seg display
-    movlw 10000101 ; Letter "U" inverted (BCDEF)
-    movwf LATF
+clear:
+    CLRF LATJ
 
 
+    MOVLW 8
+    MOVWF q
+ loop1:
 
-    bsf LATH, 1, a ; Disabling the PNP transistor for next sequence
-    setf LATF ; Clearing the output binary for LEDs
+     MOVLW 1
+     SUBWF q, W
+     MOVWF q
 
-
-switch:
-
-    movf PORTC, W, a ;((PORTC) and 0FFh), 2, a - ((PORTC) and 0FFh), 5, a to working register
-    movwf LSB_switch, a ; Working register to custom memory allocation
-    rrncf LSB_switch, F, a ; Rotate switches right RC2345 acting as RC1234
-    rrncf LSB_switch, F, a ; Rotate switches right RC1234 acting as RC0123
-    movf LSB_switch, W, a ; Back to working register
-    andlw 0x0F ; Mask off unused bits (00001111)
-    movwf LSB_switch, a
+     MOVLW 60
+     MOVWF p
 
 
-    movf PORTH, W, a
-    movwf MSB_switch, a
-    movf MSB_switch, W, a
-    andlw 11110000B
-    movwf MSB_switch, a
+     MOVF q, W
 
-    movf LSB_switch, W, a
-    iorwf MSB_switch, W, a
-    movwf LATF
+     BZ here
+     loop:
+  MOVLW 1
+  SUBWF p, W
+  MOVWF p
+  BZ loop1
+  Bra loop
 
-    bsf LATA, 4, a ; Enabling the NPN transistor Q3 (((PORTA) and 0FFh), 4, a) for LEDs
+here:
+    MOVLW 1
+    SUBWF t, W
+    MOVWF t
+    BZ timing
+    Bra note1
+
+
+timing:
+    MOVF tm, W
+    MOVWF t
+
+note2:
+    BCF TRISJ,6
+    BSF LATJ, 6
+
+
+    MOVF km, W
+    MOVWF k
+    loop3:
+ MOVLW 1
+ SUBWF k, W
+ MOVWF k
+ BZ clear2
+ Bra loop3
+
+
+clear2:
+    CLRF LATJ
+
+
+    MOVLW 10
+    MOVWF q
+ loop4:
+
+     MOVLW 1
+     SUBWF q, W
+     MOVWF q
+
+     MOVLW 60
+     MOVWF p
 
 
 
+     MOVF q, W
 
-    clrf LATF
-    bcf LATA, 4, a ; Disabling the NPN transistor for next sequence
-    bra main ; Else loop back to main
+     BZ here2
+     loop5:
+  MOVLW 1
+  SUBWF p, W
+  MOVWF p
+  BZ loop4
+  Bra loop5
 
-    end
+here2:
+    MOVLW 1
+    SUBWF t, W
+    MOVWF t
+    BZ start
+    Bra note2
+
+bra start
+
+end ; Do not forget the end statement!

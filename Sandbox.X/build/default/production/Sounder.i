@@ -1,13 +1,14 @@
-# 1 "TestInput.s"
+# 1 "Sounder.s"
 # 1 "<built-in>" 1
-# 1 "TestInput.s" 2
+# 1 "Sounder.s" 2
+
+
+
 processor 18F8722
 radix dec
-
 CONFIG OSC = HS
-CONFIG WDT = OFF
+CONFIG WDT = OFF ;
 CONFIG LVP = OFF
-
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 1 3
 
@@ -7773,135 +7774,135 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 2 3
-# 8 "TestInput.s" 2
+# 9 "Sounder.s" 2
 
 
 PSECT udata_acs
-global LSB_switch, MSB_switch;, TOTAL_switch ; Custom memory allocation
-LSB_switch: ds 1 ; 1 byte reservation each
-MSB_switch: ds 1
-;TOTAL_switch: ds 1
+global p, q, k, t
+p: ds 1
+q: ds 1
+k: ds 1
+t: ds 1
+tm: ds 1
+km: ds 1
 
 PSECT resetVector, class=CODE, reloc=2
 resetVector:
-    goto start
+    goto start ;
 PSECT start, class=CODE, reloc=2
 start:
 
-    movlw 0x0F ; Digital Input (00001111)
-    movwf ADCON1, a
+    MOVLW 255 ; Note lasting time
+    MOVWF tm
 
-    bcf TRISA, 4, a ; Q3 (LED outputs, ((PORTA) and 0FFh), 4, a)
-    clrf TRISF ; Binary (Digital outputs, RF01234567)
-    movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
-    movwf TRISH
-    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
-    movwf TRISC
+    MOVLW 1 ; Volume
+    MOVWF km
 
-    bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
+    MOVF tm, W
+    MOVWF t
 
-    movlw 00000011B ; Q1 and Q2 PNP
-    movwf LATH
-    bcf LATA, 4, a ; Q3
-    clrf LATF ; Binary
+note1:
+    BCF TRISJ, 6
+    BSF LATJ, 6 ; Speaker ON
 
 
-
-main:
-    bcf LATA, 0, a ; Disabling the NPN transistor (Q3, ((PORTA) and 0FFh), 4, a) for next sequence
-    setf LATH ; Clearing all the binary for 7 segment display
-
-
-
-
-
-
-
-    movf PORTJ, W, a ; Read all of PORTJ (Copy port inputs to working register)
-    andlw 00100000B ; mask off unused bits (((PORTJ) and 0FFh), 5, a)
-    bz pb1_pressed ; Go to pb1_pressed if WREG is zero flagged. We used AND gate after reading PORTJ. The PORTJ (((PORTJ) and 0FFh), 5, a) becomes zero if pressed.
-    bnz switch
-
-    pb1_pressed:
-
-    movlw 10000101B ; Letter "U" inverted (BCDEF)
-    movwf LATF
-    bcf LATH, 1, a ; Enabling the PNP transistor Q2 (((PORTH) and 0FFh), 1, a) for MSB 7seg display
+    MOVF km, W
+    MOVWF k
+    loop2:
+ MOVLW 1
+ SUBWF k, W
+ MOVWF k
+ BZ clear
+ Bra loop2
 
 
-    nop ; No operation (Delay to avoid dim lighting)
-    bsf LATH, 1, a ; Disabling the PNP transistor for next sequence
-    setf LATF ; Clearing the output binary for LEDs
+clear:
+    CLRF LATJ
 
 
-switch:
+    MOVLW 8
+    MOVWF q
+ loop1:
 
-    movf PORTC, W, a ;((PORTC) and 0FFh), 2, a - ((PORTC) and 0FFh), 5, a to working register
-    movwf LSB_switch, a ; Working register to custom memory allocation
-    rrncf LSB_switch, F, a ; Rotate switches right RC2345 acting as RC1234
-    rrncf LSB_switch, F, a ; Rotate switches right RC1234 acting as RC0123
-    movf LSB_switch, W, a ; Back to working register
-    andlw 0x0F ; Mask off unused bits (00001111)
-    movwf LSB_switch, a
+     MOVLW 1
+     SUBWF q, W
+     MOVWF q
 
-
-    movf PORTH, W, a
-    movwf MSB_switch, a
-    movf MSB_switch, W, a
-    andlw 11110000B
-    movwf MSB_switch, a
-
-    movf LSB_switch, W, a
-    iorwf MSB_switch, W, a
-    movwf LATF
-
-    bsf LATA, 4, a ; Enabling the NPN transistor Q3 (((PORTA) and 0FFh), 4, a) for LEDs
+     MOVLW 60
+     MOVWF p
 
 
-    nop ; No operation (Delay to avoid dim lighting)
-    nop
-    nop
-    clrf LATF
-    bcf LATA, 4, a ; Disabling the NPN transistor for next sequence
+     MOVF q, W
 
-calculator:
-    rrncf MSB_switch, F, a ; Treating the first 4 bits MSB as 8 bit unsigned
-    rrncf MSB_switch, F, a
-    rrncf MSB_switch, F, a
-    rrncf MSB_switch, W, a ; Copying the shifted binary to working register
-    andlw 00001111B ; Masking the unused bits for safety
-    movwf MSB_switch ; Copying the masked binary for safety
+     BZ here
+     loop:
+  MOVLW 1
+  SUBWF p, W
+  MOVWF p
+  BZ loop1
+  Bra loop
 
-    ; Subtracting the LSB from MSB binary
-    movf MSB_switch, W, a
-    subwf LSB_switch
+here:
+    MOVLW 1
+    SUBWF t, W
+    MOVWF t
+    BZ timing
+    Bra note1
 
-    ; Arithmetic operators: bz = equal, bnc = MSB > LSB, BNZ = LSB < MSB (Else after previous tests)
 
-    bz equal ; Jump to "equal" if zero flag = 1
-    bnc leftlarger ; Jump to "leftlarger" if carry flag = 0
-    bra rightlarger ; Else after the two previous tests (bnz also working)
+timing:
+    MOVF tm, W
+    MOVWF t
 
- equal: ; Letter "E" for equal
-     movlw 00001110B ; Inverted binary for letter "E" (ADEFG)
-     movwf LATF
+note2:
+    BCF TRISJ,6
+    BSF LATJ, 6
 
-     bcf LATH, 0, a
-     bra main
 
- leftlarger: ; Letter "L" for Left
-         movlw 10001111B ; Inverted binary for letter "L" (DEF)
-     movwf LATF
+    MOVF km, W
+    MOVWF k
+    loop3:
+ MOVLW 1
+ SUBWF k, W
+ MOVWF k
+ BZ clear2
+ Bra loop3
 
-     bcf LATH, 0, a
-     bra main
 
-     rightlarger: ; Letter "r" for right
-     movlw 01011111B ; Inverted binary for letter "r" (EG)
-     movwf LATF
+clear2:
+    CLRF LATJ
 
-     bcf LATH, 0, a
-     bra main
-    bra main ; Else loop back to main
 
-    end
+    MOVLW 10
+    MOVWF q
+ loop4:
+
+     MOVLW 1
+     SUBWF q, W
+     MOVWF q
+
+     MOVLW 60
+     MOVWF p
+
+
+
+     MOVF q, W
+
+     BZ here2
+     loop5:
+  MOVLW 1
+  SUBWF p, W
+  MOVWF p
+  BZ loop4
+  Bra loop5
+
+here2:
+    MOVLW 1
+    SUBWF t, W
+    MOVWF t
+    BZ start
+    Bra note2
+
+bra start
+
+end ; Do not forget the end statement!

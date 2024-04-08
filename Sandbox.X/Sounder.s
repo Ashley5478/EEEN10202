@@ -10,12 +10,12 @@ CONFIG LVP = OFF
     
 PSECT udata_acs
 global p, q, k, t
-p: ds	1    
+p: ds	1
 q: ds	1
 k: ds	1
 t: ds	1
-tm: ds	1
-km: ds	1
+tm: ds	1   ; Note lasting time
+km: ds	1   ; Volume
     
 PSECT resetVector, class=CODE, reloc=2
 resetVector:
@@ -23,21 +23,18 @@ resetVector:
 PSECT start, class=CODE, reloc=2
 start:
     
-    MOVLW 255
+    MOVLW 255	; Note lasting time
     MOVWF tm
     
-    MOVLW 3 ; Volume
+    MOVLW 1	; Volume
     MOVWF km
 
     MOVF tm, W
     MOVWF t
 
 note1:
-    
-    
-    BCF TRISJ,6
+    BCF TRISJ, 6
     BSF LATJ, 6 ; Speaker ON
-    
     
     MOVF km, W
     MOVWF k
@@ -48,10 +45,8 @@ note1:
 	BZ clear
 	Bra loop2
     
-    
 clear:
     CLRF LATJ
-
     
     MOVLW 8
     MOVWF q
@@ -80,17 +75,16 @@ here:
     SUBWF t, W
     MOVWF t
     BZ timing
-    Bra note1
-		
+    Bra note1	
 		
 timing:
     MOVF tm, W
     MOVWF t
 
+    
 note2:		
     BCF TRISJ,6
     BSF LATJ, 6
-    
     
     MOVF km, W
     MOVWF k
@@ -101,12 +95,10 @@ note2:
 	BZ clear2
 	Bra loop3
     
-    
 clear2:
     CLRF LATJ
     
-    
-    MOVLW 10  
+    MOVLW 10
     MOVWF q
 	loop4:
 
