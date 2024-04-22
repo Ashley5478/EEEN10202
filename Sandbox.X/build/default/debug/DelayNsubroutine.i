@@ -7792,19 +7792,17 @@ start:
     clrf TRISF, a ; Binary (Digital outputs, RF01234567)
     movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
     movwf TRISH, a
-    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
+    movlw 00111000B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
     movwf TRISC, a
 
     bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
-    bsf TRISB, 0, a ; Left button ((PORTE) and 0FFh), 2, a
+    bcf TRISB, 0, a ; Left button ((PORTE) and 0FFh), 2, a
 
 
     movlw 00000011B ; Q1 and Q2 PNP (7 segment display driver) disable
     movwf LATH, a
 
-
-    movlw 11111100B
-    movwf LATF
+    clrf LATF, a ; Binary all zero
 
     bsf LATA, 4, a ; Q3 (LED driver) enable
 
@@ -7812,6 +7810,11 @@ start:
 
     bcf LATA, 0, a ; Disabling the NPN transistor (Q3, ((PORTA) and 0FFh), 4, a) for next sequence
     setf LATH, a ; Clearing all the binary for 7 segment display
+
+
+    BSF PORTC, 2, a
+    BSF PORTB, 0, a
+
 
 
 
@@ -7844,20 +7847,32 @@ counter:
 
     movf LATF, W, a
     addlw 00000001B
-    bov ended
+    bz ended
     movwf LATF, a
 
-    movlw 1
+    movlw 10
     movwf DelayLoopCount, b ; Length of time for a delay
 
-    call delayer
+    call delay_10ms
+    call delay_10ms
+    call delay_10ms
 
     bra counter
 
-delayer:
-# 128 "DelayNsubroutine.s"
+
+
+
+delay_10ms:
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
     decf DelayLoopCount, b
-    bnz delayer
+    bnz delay_10ms
     return
 
 ended:

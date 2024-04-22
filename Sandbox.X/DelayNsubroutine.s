@@ -24,11 +24,11 @@ start:
     clrf TRISF, a	    ; Binary (Digital outputs, RF01234567)
     movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
     movwf TRISH, a
-    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
+    movlw 00111000B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
     movwf TRISC, a
     
     bsf TRISJ, 5, a ; Right button PB1
-    bsf TRISB, 0, a ; Left button PB2
+    bcf TRISB, 0, a ; Left button PB2
     // Initialize all relevant latch values
     
     movlw 00000011B  ; Q1 and Q2 PNP (7 segment display driver) disable
@@ -43,6 +43,11 @@ start:
     bcf LATA, 0, a  ; Disabling the NPN transistor (Q3, RA4) for next sequence
     setf LATH, a	    ; Clearing all the binary for 7 segment display
 
+    // !!!SIMULATOR INITIALIZATION!!!
+    BSF PORTC, 2, a
+    BSF PORTB, 0, a
+    
+    
 // Switch scanner
     // For the four right switches, the PORTH values are 4 - 7.
 switch:
@@ -77,44 +82,19 @@ counter:
     bz ended
     movwf LATF, a   
     
-    movlw 255
+    movlw 10
     movwf DelayLoopCount, b	; Length of time for a delay
     
-    call delayer
+    call delay_10ms
+    call delay_10ms
+    call delay_10ms
     
     bra counter
 
-delayer:
+    // At 10 MHz, 100ns of period. 50ms == 500000 cycles needed.
     
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+    // General command: 1 cycle, branch: 2 cycles
+delay_10ms:
     nop
     nop
     nop
@@ -124,7 +104,7 @@ delayer:
     nop
     
     decf DelayLoopCount, b
-    bnz delayer
+    bnz delay_10ms
     return
 
 ended:
