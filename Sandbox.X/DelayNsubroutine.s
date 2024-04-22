@@ -24,11 +24,14 @@ start:
     clrf TRISF, a	    ; Binary (Digital outputs, RF01234567)
     movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
     movwf TRISH, a
-    movlw 00111000B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
+    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
     movwf TRISC, a
     
+//    bcf TRISC, 2, a ; ONLY FOR DEBUGGING STOPWATCH
+    
     bsf TRISJ, 5, a ; Right button PB1
-    bcf TRISB, 0, a ; Left button PB2
+    bsf TRISB, 0, a ; Left button PB2
+    // USE BCF FOR DEBUGGING
     // Initialize all relevant latch values
     
     movlw 00000011B  ; Q1 and Q2 PNP (7 segment display driver) disable
@@ -43,9 +46,11 @@ start:
     bcf LATA, 0, a  ; Disabling the NPN transistor (Q3, RA4) for next sequence
     setf LATH, a	    ; Clearing all the binary for 7 segment display
 
-    // !!!SIMULATOR INITIALIZATION!!!
+    // STOPWATCH DEBUGGING ONLY
+    /*
     BSF PORTC, 2, a
     BSF PORTB, 0, a
+    */
     
     
 // Switch scanner
@@ -82,19 +87,57 @@ counter:
     bz ended
     movwf LATF, a   
     
-    movlw 10
-    movwf DelayLoopCount, b	; Length of time for a delay
     
-    call delay_10ms
-    call delay_10ms
-    call delay_10ms
-    
+    // At 10 MHz, 100ns of period. 50ms == 500000 cycles needed.
+    // In practical PIC18 I/O board, use 2.5 MHz so 50ms == 125000 cycles needed
+    // Hotkey to copy the current line and then paste to next line: CTRL + ?
+    call delay_1ms // +2 cycles per each call, NET CYCLE: 10000 (1ms if 10MHz)
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+
+
     bra counter
 
-    // At 10 MHz, 100ns of period. 50ms == 500000 cycles needed.
     
-    // General command: 1 cycle, branch: 2 cycles
-delay_10ms:
+    // General command: 1 cycle, jump from branch label to operation: 1 cycle, branch action: 2 cycles
+delay_1ms: // +3 cycles
+    movlw 249
+    movwf DelayLoopCount, b	; Length of time for a delay
+    
+    
+    delay_1ms_run:
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
     nop
     nop
     nop
@@ -104,7 +147,22 @@ delay_10ms:
     nop
     
     decf DelayLoopCount, b
-    bnz delay_10ms
+    bnz delay_1ms_run
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
     return
 
 ended:
