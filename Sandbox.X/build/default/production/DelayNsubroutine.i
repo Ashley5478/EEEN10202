@@ -1,14 +1,13 @@
-# 1 "Sounder.s"
+# 1 "DelayNsubroutine.s"
 # 1 "<built-in>" 1
-# 1 "Sounder.s" 2
-
-
-
+# 1 "DelayNsubroutine.s" 2
 processor 18F8722
 radix dec
+
 CONFIG OSC = HS
-CONFIG WDT = OFF ;
+CONFIG WDT = OFF
 CONFIG LVP = OFF
+
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 1 3
 
@@ -7774,137 +7773,129 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 5 "C:\\Program Files\\Microchip\\xc8\\v2.46\\pic\\include\\xc.inc" 2 3
-# 9 "Sounder.s" 2
-
+# 9 "DelayNsubroutine.s" 2
 
 PSECT udata_acs
-global p, q, k, t
-p: ds 1
-q: ds 1
-k: ds 1
-t: ds 1
-tm: ds 1
-km: ds 1
+global DelayLoopCount; Custom memory allocation
+DelayLoopCount: ds 1 ; 1 byte reservation each
 
 PSECT resetVector, class=CODE, reloc=2
 resetVector:
-    goto start ;
+    goto start
 PSECT start, class=CODE, reloc=2
 start:
 
-    MOVLW 255
-    MOVWF tm
+    movlw 0x0F ; Digital Input (00001111)
+    movwf ADCON1, a
 
-    MOVLW 3 ; Volume
-    MOVWF km
+    bcf TRISA, 4, a ; Q3 (LED outputs, ((PORTA) and 0FFh), 4, a)
+    clrf TRISF, a ; Binary (Digital outputs, RF01234567)
+    movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
+    movwf TRISH, a
+    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
+    movwf TRISC, a
 
-    MOVF tm, W
-    MOVWF t
-
-note1:
-
-
-    BCF TRISJ,6
-    BSF LATJ, 6 ; Speaker ON
+    bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
+    bsf TRISB, 0, a ; Left button ((PORTE) and 0FFh), 2, a
 
 
-    MOVF km, W
-    MOVWF k
-    loop2:
- MOVLW 1
- SUBWF k, W
- MOVWF k
- BZ clear
- Bra loop2
+    movlw 00000011B ; Q1 and Q2 PNP (7 segment display driver) disable
+    movwf LATH, a
 
+    clrf LATF, a ; Binary all zero
 
-clear:
-    CLRF LATJ
-
-
-    MOVLW 8
-    MOVWF q
- loop1:
-
-     MOVLW 1
-     SUBWF q, W
-     MOVWF q
-
-     MOVLW 60
-     MOVWF p
-
-
-     MOVF q, W
-
-     BZ here
-     loop:
-  MOVLW 1
-  SUBWF p, W
-  MOVWF p
-  BZ loop1
-  Bra loop
-
-here:
-    MOVLW 1
-    SUBWF t, W
-    MOVWF t
-    BZ timing
-    Bra note1
-
-
-timing:
-    MOVF tm, W
-    MOVWF t
-
-note2:
-    BCF TRISJ,6
-    BSF LATJ, 6
-
-
-    MOVF km, W
-    MOVWF k
-    loop3:
- MOVLW 1
- SUBWF k, W
- MOVWF k
- BZ clear2
- Bra loop3
-
-
-clear2:
-    CLRF LATJ
-
-
-    MOVLW 10
-    MOVWF q
- loop4:
-
-     MOVLW 1
-     SUBWF q, W
-     MOVWF q
-
-     MOVLW 60
-     MOVWF p
+    bsf LATA, 4, a ; Q3 (LED driver) enable
 
 
 
-     MOVF q, W
+    bcf LATA, 0, a ; Disabling the NPN transistor (Q3, ((PORTA) and 0FFh), 4, a) for next sequence
+    setf LATH, a ; Clearing all the binary for 7 segment display
 
-     BZ here2
-     loop5:
-  MOVLW 1
-  SUBWF p, W
-  MOVWF p
-  BZ loop4
-  Bra loop5
 
-here2:
-    MOVLW 1
-    SUBWF t, W
-    MOVWF t
-    BZ start
-    Bra note2
 
-bra start
+switch:
+    movf PORTC, W, a ;((PORTC) and 0FFh), 2, a - ((PORTC) and 0FFh), 5, a to working register
+; movf PORTH, W, a ;((PORTH) and 0FFh), 4, a - ((PORTH) and 0FFh), 7, a to working register
+    ANDLW 00000100B ; Only reads the ((PORTC) and 0FFh), 2, a (Rightmost switch)
+    bz switch ; Back to switch if zero flag is active (No switch input)
 
-end ; Do not forget the end statement!
+
+counter:
+
+    button_loop:
+
+    movf PORTB, W, a ; Read all of PORTB
+    andlw 00000001B ; Mask off unused bits (((PORTB) and 0FFh), 0, a)
+    bz pb2_pressed ; If pressed go to this label
+
+
+
+
+
+
+
+    pb2_pressed:
+    btfss PORTB, 0, a
+    goto pb2_pressed
+
+
+
+    movf LATF, W, a
+    addlw 00000001B
+    bz ended
+    movwf LATF, a
+
+    movlw 255
+    movwf DelayLoopCount, b ; Length of time for a delay
+
+    call delayer
+
+    bra counter
+
+delayer:
+
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+    decf DelayLoopCount, b
+    bnz delayer
+    return
+
+ended:
+    bra ended
+
+    end

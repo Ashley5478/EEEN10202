@@ -47,7 +47,7 @@ pb2_pressed:
     movwf LATF
     movf PORTB, W, a  ; Read all of PORTB (Protection)
 Protection1:
-    btfss PORTB, 0, a ; Test RB0, skip next line if button pressed
+    btfss PORTB, 0, a ; Test RB0, skip next line if button released
     goto Protection1
     bra main
   
@@ -57,7 +57,7 @@ Protection1:
     movwf LATF
     movf PORTJ, W, a  ; Read all of PORTB (Protection)
 Protection2:
-    btfss PORTJ, 5, a ; Test RJ5, skip next line if button pressed
+    btfss PORTJ, 5, a ; Test RJ5, skip next line if button released
     goto Protection2
     bra main
   

@@ -23,6 +23,7 @@
       <itemPath>TestOutput.s</itemPath>
       <itemPath>TestInput.s</itemPath>
       <itemPath>LEDknob.s</itemPath>
+      <itemPath>DelayNsubroutine.s</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -107,12 +108,12 @@
         <property key="lastid" value=""/>
         <property key="oscillator.auxfrequency" value="120"/>
         <property key="oscillator.auxfrequencyunit" value="Mega"/>
-        <property key="oscillator.frequency" value="1"/>
+        <property key="oscillator.frequency" value="2.5"/>
         <property key="oscillator.frequencyunit" value="Mega"/>
         <property key="oscillator.rcfrequency" value="250"/>
         <property key="oscillator.rcfrequencyunit" value="Kilo"/>
         <property key="periphADC1.altscl" value="false"/>
-        <property key="periphADC1.minTacq" value=""/>
+        <property key="periphADC1.minTacq" value="5"/>
         <property key="periphADC1.tacqunits" value="microseconds"/>
         <property key="periphADC2.altscl" value="false"/>
         <property key="periphADC2.minTacq" value=""/>
@@ -578,7 +579,7 @@
         <pic-as-linker>
         </pic-as-linker>
       </item>
-      <item path="TestInput.s" ex="false" overriding="false">
+      <item path="TestInput.s" ex="true" overriding="false">
         <pic-as-assembler>
         </pic-as-assembler>
         <pic-as-global>
@@ -635,12 +636,12 @@
         <property key="memories.programmemory.ranges" value="0-1ffff"/>
         <property key="oscillator.auxfrequency" value="120"/>
         <property key="oscillator.auxfrequencyunit" value="Mega"/>
-        <property key="oscillator.frequency" value="1"/>
+        <property key="oscillator.frequency" value="2.5"/>
         <property key="oscillator.frequencyunit" value="Mega"/>
         <property key="oscillator.rcfrequency" value="250"/>
         <property key="oscillator.rcfrequencyunit" value="Kilo"/>
         <property key="periphADC1.altscl" value="false"/>
-        <property key="periphADC1.minTacq" value=""/>
+        <property key="periphADC1.minTacq" value="5"/>
         <property key="periphADC1.tacqunits" value="microseconds"/>
         <property key="periphADC2.altscl" value="false"/>
         <property key="periphADC2.minTacq" value=""/>
@@ -1208,8 +1209,6 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-1ffff"/>
         <property key="poweroptions.powerenable" value="true"/>
-        <property key="programmerToGoFilePath"
-                  value="C:/Users/JeongHyun/MPLABXProjects/Sandbox.X/debug/default/Sandbox_ptg"/>
         <property key="programmerToGoImageName" value="Sandbox_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>

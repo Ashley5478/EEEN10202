@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=TestInput.s
+SOURCEFILES_QUOTED_IF_SPACED=DelayNsubroutine.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/TestInput.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/TestInput.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/DelayNsubroutine.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/DelayNsubroutine.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/TestInput.o
+OBJECTFILES=${OBJECTDIR}/DelayNsubroutine.o
 
 # Source Files
-SOURCEFILES=TestInput.s
+SOURCEFILES=DelayNsubroutine.s
 
 
 
@@ -89,21 +89,21 @@ FINAL_IMAGE_NAME_MINUS_EXTENSION=${DISTDIR}/Sandbox.X.${IMAGE_TYPE}
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: pic-as-assembler
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/TestInput.o: TestInput.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/DelayNsubroutine.o: DelayNsubroutine.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/TestInput.o 
+	@${RM} ${OBJECTDIR}/DelayNsubroutine.o 
 	${MP_AS} -mcpu=PIC18F8722 -c \
-	-o ${OBJECTDIR}/TestInput.o \
-	TestInput.s \
+	-o ${OBJECTDIR}/DelayNsubroutine.o \
+	DelayNsubroutine.s \
 	 -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp -Wl,-presetVector=0h, -Wl,-pstart=200h
 	
 else
-${OBJECTDIR}/TestInput.o: TestInput.s  nbproject/Makefile-${CND_CONF}.mk 
+${OBJECTDIR}/DelayNsubroutine.o: DelayNsubroutine.s  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/TestInput.o 
+	@${RM} ${OBJECTDIR}/DelayNsubroutine.o 
 	${MP_AS} -mcpu=PIC18F8722 -c \
-	-o ${OBJECTDIR}/TestInput.o \
-	TestInput.s \
+	-o ${OBJECTDIR}/DelayNsubroutine.o \
+	DelayNsubroutine.s \
 	  -mdfp="${DFP_DIR}/xc8"  -misa=std -msummary=+mem,-psect,-class,-hex,-file,-sha1,-sha256,-xml,-xmlfull -fmax-errors=20 -mwarn=0 -xassembler-with-cpp -Wl,-presetVector=0h, -Wl,-pstart=200h
 	
 endif

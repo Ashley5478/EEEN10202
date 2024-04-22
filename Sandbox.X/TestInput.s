@@ -23,24 +23,24 @@ start:
     movwf ADCON1, a
     
     bcf TRISA, 4, a ; Q3 (LED outputs, RA4)
-    clrf TRISF	    ; Binary (Digital outputs, RF01234567)
+    clrf TRISF, a	    ; Binary (Digital outputs, RF01234567)
     movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
-    movwf TRISH
+    movwf TRISH, a
     movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
-    movwf TRISC
+    movwf TRISC, a
     
     bsf TRISJ, 5, a ; Right button PB1
     // Initialize latch values
     movlw 00000011B  ; Q1 and Q2 PNP
-    movwf LATH
+    movwf LATH, a
     bcf LATA, 4, a  ; Q3
-    clrf LATF	    ; Binary
+    clrf LATF, a	    ; Binary
     
     
     // Illumination
 main:
     bcf LATA, 0, a  ; Disabling the NPN transistor (Q3, RA4) for next sequence
-    setf LATH	    ; Clearing all the binary for 7 segment display
+    setf LATH, a	    ; Clearing all the binary for 7 segment display
     
 // Button scanner
     /* FOR PB2 (LEFT BUTTON)
@@ -56,13 +56,13 @@ main:
     pb1_pressed:
 
     movlw 10000101B	; Letter "U" inverted (BCDEF)
-    movwf LATF
+    movwf LATF, a
     bcf LATH, 1, a	; Enabling the PNP transistor Q2 (RH1) for MSB 7seg display
 
 	// Transistion
     nop	    ; No operation (Delay to avoid dim lighting)
     bsf LATH, 1, a  ; Disabling the PNP transistor for next sequence
-    setf LATF	    ; Clearing the output binary for LEDs
+    setf LATF, a	    ; Clearing the output binary for LEDs
     
 // Switch scanner
 switch:
@@ -83,8 +83,8 @@ switch:
     movwf MSB_switch, a
     
     movf LSB_switch, W, a
-    iorwf MSB_switch, W, a
-    movwf LATF
+//    iorwf MSB_switch, W, a
+    movwf LATF, a
 
     bsf LATA, 4, a	; Enabling the NPN transistor Q3 (RA4) for LEDs
 
@@ -92,7 +92,7 @@ switch:
     nop	    ; No operation (Delay to avoid dim lighting)
     nop
     nop
-    clrf LATF
+    clrf LATF, a
     bcf LATA, 4, a	; Disabling the NPN transistor for next sequence
 
 calculator:
@@ -101,11 +101,11 @@ calculator:
     rrncf MSB_switch, F, a
     rrncf MSB_switch, W, a  ; Copying the shifted binary to working register
     andlw 00001111B	    ; Masking the unused bits for safety
-    movwf MSB_switch	    ; Copying the masked binary for safety
+    movwf MSB_switch, b	    ; Copying the masked binary for safety
 
     ; Subtracting the LSB from MSB binary
     movf MSB_switch, W, a
-    subwf LSB_switch
+    subwf LSB_switch, b
     
     ; Arithmetic operators: bz = equal, bnc = MSB > LSB, BNZ = LSB < MSB (Else after previous tests)
     
@@ -115,21 +115,21 @@ calculator:
     
 	equal: ; Letter "E" for equal
 	    movlw 00001110B	; Inverted binary for letter "E" (ADEFG)
-	    movwf LATF
+	    movwf LATF, a
 
 	    bcf LATH, 0, a
 	    bra main
 	    
 	leftlarger:	; Letter "L" for Left
     	    movlw 10001111B	; Inverted binary for letter "L" (DEF)
-	    movwf LATF
+	    movwf LATF, a
 	    
 	    bcf LATH, 0, a
 	    bra main
 
     	rightlarger:	; Letter "r" for right
 	    movlw 01011111B	; Inverted binary for letter "r" (EG)
-	    movwf LATF
+	    movwf LATF, a
 	    
 	    bcf LATH, 0, a
 	    bra main
