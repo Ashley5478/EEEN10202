@@ -7796,8 +7796,11 @@ start:
     movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
     movwf TRISC, a
 
+
+
     bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
     bsf TRISB, 0, a ; Left button ((PORTE) and 0FFh), 2, a
+
 
 
     movlw 00000011B ; Q1 and Q2 PNP (7 segment display driver) disable
@@ -7811,7 +7814,7 @@ start:
 
     bcf LATA, 0, a ; Disabling the NPN transistor (Q3, ((PORTA) and 0FFh), 4, a) for next sequence
     setf LATH, a ; Clearing all the binary for 7 segment display
-# 53 "DelayNsubroutine.s"
+# 57 "DelayNsubroutine.s"
 switch:
     movf PORTC, W, a ;((PORTC) and 0FFh), 2, a - ((PORTC) and 0FFh), 5, a to working register
 ; movf PORTH, W, a ;((PORTH) and 0FFh), 4, a - ((PORTH) and 0FFh), 7, a to working register
@@ -7844,41 +7847,47 @@ counter:
     bz ended
     movwf LATF, a
 
-    call delay_10ms
-    call delay_10ms
-    call delay_10ms
-# 136 "DelayNsubroutine.s"
+
+
+
+
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+    call delay_1ms
+
+
     bra counter
 
 
 
-
-delay_10ms:
+delay_1ms:
     movlw 249
     movwf DelayLoopCount, b ; Length of time for a delay
 
 
-    delay_10ms_run:
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+    delay_1ms_run:
     nop
     nop
     nop
@@ -7898,27 +7907,7 @@ delay_10ms:
     nop
 
     decf DelayLoopCount, b
-    bnz delay_10ms_run
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+    bnz delay_1ms_run
     nop
     nop
     nop

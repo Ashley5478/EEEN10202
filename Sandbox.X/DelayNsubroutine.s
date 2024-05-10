@@ -47,10 +47,9 @@ start:
     setf LATH, a	    ; Clearing all the binary for 7 segment display
 
     // STOPWATCH DEBUGGING ONLY
-    /*
-    BSF PORTC, 2, a
-    BSF PORTB, 0, a
-    */
+//    BSF PORTC, 2, a
+//    BSF PORTB, 0, a
+   
     
     
 // Switch scanner

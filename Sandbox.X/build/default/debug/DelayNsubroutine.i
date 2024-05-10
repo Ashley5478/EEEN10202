@@ -7793,11 +7793,14 @@ start:
     clrf TRISF, a ; Binary (Digital outputs, RF01234567)
     movlw 11110000B ; MSB, Q1 and Q2 (Switche inputs and 7seg display outputs, RH4567 RH01)
     movwf TRISH, a
-    movlw 00111000B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
+    movlw 00111100B ; LSB, requires RRNCF (rotate right no carry) twice (RC2345)
     movwf TRISC, a
 
-    bsf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
+    bcf TRISC, 2, a ; ONLY FOR DEBUGGING STOPWATCH
+
+    bcf TRISJ, 5, a ; Right button ((PORTH) and 0FFh), 7, a
     bcf TRISB, 0, a ; Left button ((PORTE) and 0FFh), 2, a
+
 
 
     movlw 00000011B ; Q1 and Q2 PNP (7 segment display driver) disable
@@ -7815,6 +7818,7 @@ start:
 
     BSF PORTC, 2, a
     BSF PORTB, 0, a
+
 
 
 
@@ -7850,6 +7854,7 @@ counter:
     addlw 00000001B
     bz ended
     movwf LATF, a
+
 
 
 

@@ -24,6 +24,14 @@
       <itemPath>TestInput.s</itemPath>
       <itemPath>LEDknob.s</itemPath>
       <itemPath>DelayNsubroutine.s</itemPath>
+      <itemPath>Sandbox.s</itemPath>
+      <itemPath>HandbookQ2B.s</itemPath>
+      <itemPath>HandbookQ2.s</itemPath>
+      <itemPath>HandbookQ2C.s</itemPath>
+      <itemPath>HandbookQ2D.s</itemPath>
+      <itemPath>HandbookQ2E.s</itemPath>
+      <itemPath>MockQ2.1.s</itemPath>
+      <itemPath>MockQ2.2.s</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -37,7 +45,7 @@
         <targetDevice>PIC18F8722</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>Simulator</platformTool>
+        <platformTool>pk4hybrid</platformTool>
         <languageToolchain>pic-as</languageToolchain>
         <languageToolchainVersion>2.46</languageToolchainVersion>
         <platform>3</platform>
@@ -72,6 +80,30 @@
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
+      <item path="DelayNsubroutine.s" ex="true" overriding="false">
+        <pic-as-assembler>
+        </pic-as-assembler>
+        <pic-as-global>
+        </pic-as-global>
+        <pic-as-linker>
+        </pic-as-linker>
+      </item>
+      <item path="HandbookQ2.s" ex="true" overriding="false">
+        <pic-as-assembler>
+        </pic-as-assembler>
+        <pic-as-global>
+        </pic-as-global>
+        <pic-as-linker>
+        </pic-as-linker>
+      </item>
+      <item path="HandbookQ2B.s" ex="true" overriding="false">
+      </item>
+      <item path="HandbookQ2C.s" ex="true" overriding="false">
+      </item>
+      <item path="HandbookQ2D.s" ex="true" overriding="false">
+      </item>
+      <item path="HandbookQ2E.s" ex="true" overriding="false">
+      </item>
       <item path="LEDcounter1.s" ex="true" overriding="false">
         <pic-as-assembler>
         </pic-as-assembler>
@@ -89,6 +121,16 @@
         </pic-as-linker>
       </item>
       <item path="LEDswitch.s" ex="true" overriding="false">
+        <pic-as-assembler>
+        </pic-as-assembler>
+        <pic-as-global>
+        </pic-as-global>
+        <pic-as-linker>
+        </pic-as-linker>
+      </item>
+      <item path="MockQ2.1.s" ex="true" overriding="false">
+      </item>
+      <item path="Sandbox.s" ex="true" overriding="false">
         <pic-as-assembler>
         </pic-as-assembler>
         <pic-as-global>
@@ -615,7 +657,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.simultaneous.debug" value="false"/>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
         <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
@@ -1189,7 +1231,7 @@
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.simultaneous.debug" value="false"/>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
         <property key="event.recorder.debugger.behavior" value="Running"/>
         <property key="event.recorder.enabled" value="false"/>
         <property key="event.recorder.scvd.files" value=""/>
